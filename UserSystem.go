@@ -2,7 +2,7 @@ package main
 
 import (
 	"fmt"
-	"math/rand"
+	"math/rand"//生成随机数
 	"net/http"
 	"strconv"
 	"time"
@@ -12,8 +12,8 @@ type User struct{
 	password string
 	ID string
 	cookie http.Cookie
-}
-var mydata = make(map[string]*User)
+}//结构体存储用户名、密码
+var mydata = make(map[string]*User)//使用map存储用户信息
 func website(w http.ResponseWriter,r *http.Request ){
 	for a,b :=range mydata{
 		cookie, err := r.Cookie(a)
@@ -63,6 +63,7 @@ func register(w http.ResponseWriter,r *http.Request){
 		w.Write([]byte("您未完成注册，请确保正确输入用户名及密码"))
 	}
 }
+//修改密码
 func ChangePassword(w http.ResponseWriter,r *http.Request){
 	var username string
 	bools :=false
