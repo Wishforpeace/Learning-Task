@@ -1,2 +1,2 @@
 # Learning-Task
-To score my task code.
+To store my task code.
