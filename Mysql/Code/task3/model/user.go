@@ -97,8 +97,8 @@ func QueryData(userName string, Pwd string, id string) {
 	}
 	defer rows.Close()
 	count := 0
-	var data map[int]struct
-	for rows.Next() {
+	var data map[int]string
+	for rows.Next(){
 		map[count]
 		err = rows.Scan(&User.Uid, &User.Uname, &Upwd)
 		if err != nil {
