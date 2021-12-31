@@ -1,9 +1,9 @@
 package handle
 
 import (
-	"Mygo/football/model"
 	"fmt"
 	"net/http"
+	"test/model"
 )
 
 func Login(w http.ResponseWriter, r *http.Request) error {
@@ -26,4 +26,5 @@ func Login(w http.ResponseWriter, r *http.Request) error {
 			break
 		}
 	}
+	return err
 }

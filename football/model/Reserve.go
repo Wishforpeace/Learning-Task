@@ -1,9 +1,8 @@
 package model
 
 import (
-	"database/sql"
 	"log"
-	"utils"
+	"test/utils"
 )
 
 func Reserve(game string) error {

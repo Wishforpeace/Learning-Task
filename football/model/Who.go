@@ -1,8 +1,8 @@
 package model
 
 import (
-	"Mygo/football/utils"
 	"log"
+	"test/utils"
 )
 
 func Who(name string, pwd string) int {

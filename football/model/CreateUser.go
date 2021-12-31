@@ -1,21 +1,22 @@
 package model
 
 import (
-	"Mygo/football/utils"
-	"database/sql"
 	_ "github.com/go-sql-driver/mysql"
 	"golang.org/x/crypto/bcrypt"
+	"strconv"
+	"test/utils"
 )
 
-func CreateUser(name string, pwd string, position int) (string, error) {
+func CreateUser(name string, pwd string, position string) (string, error) {
 	sqlStr := "insert into users(user_name,user_password,position)values(?,?,?)"
-	stmt, err := utils.DB.Exec(sqlStr, name, pwd, position)
+	identity, _ := strconv.Atoi(position)
+	stmt, err := utils.DB.Prepare(sqlStr)
 	if err != nil {
 		return "", err
 	}
-	defer stmt.Close()
+
 	hashedPassword, _ := bcrypt.GenerateFromPassword([]byte(pwd), 14)
-	_, err = stmt.Exec(name, hashedPassword)
+	_, err = stmt.Exec(name, hashedPassword, identity)
 	if err != nil {
 		return "", err
 	}

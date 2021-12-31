@@ -1,9 +1,9 @@
-package handel
+package handle
 
 import (
-	"Mygo/football/model"
 	"fmt"
 	"net/http"
+	"test/model"
 )
 
 func Appointment(w http.ResponseWriter, r *http.Request) {

@@ -1,19 +1,19 @@
 package handle
 
 import (
-	"Mygo/football/model"
 	"encoding/json"
 	"fmt"
 	"net/http"
+	"test/model"
 )
 
-func authenticationsHandler(w http.ResponseWriter, req *http.Request) {
+func AuthenticationsHandler(w http.ResponseWriter, req *http.Request) {
 
 	username, password, ok := req.BasicAuth()
 
 	if ok {
 
-		tokenDetails, err := model.generateToken(username, password)
+		tokenDetails, err := model.GenerateToken(username, password)
 
 		if err != nil {
 			fmt.Fprintf(w, err.Error())

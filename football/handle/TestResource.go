@@ -1,17 +1,17 @@
 package handle
 
 import (
-	"Mygo/football/model"
 	"fmt"
 	"net/http"
 	"strings"
+	"test/model"
 )
 
-func testResourceHandler(w http.ResponseWriter, req *http.Request) {
+func TestResourceHandler(w http.ResponseWriter, req *http.Request) {
 
 	authToken := strings.Split(req.Header.Get("Authorization"), "Bearer ")[1]
 
-	userDetails, err := model.val(authToken)
+	userDetails, err := model.ValidateToken(authToken)
 
 	if err != nil {
 

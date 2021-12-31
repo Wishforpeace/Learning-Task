@@ -2,8 +2,8 @@ package handle
 
 import (
 	"fmt"
-	"Mygo/football/model"
 	"net/http"
+	"test/model"
 )
 
 func SetGame(w http.ResponseWriter, r *http.Request) {

@@ -1,18 +1,15 @@
 package main
 
 import (
-	"Mygo/football/handle"
-	"encoding/json"
-	"fmt"
 	"net/http"
-	"strings"
+	"test/handle"
 )
 
 func main() {
-	http.HandleFunc("/registeration", handle.registrationsHandler)
-	http.HandleFunc("/authentications", handle.authenticationsHandler)
-	http.HandleFunc("/test", handle.testResourceHandler)
-	http.HandleFunc("/gamerange", handle.RangeGames)
-	http.HandleFunc("/AddPalyes", handle.EditPlayers)
+	http.HandleFunc("/register", handle.RegistrationsHandler)
+	http.HandleFunc("/auth", handle.AuthenticationsHandler)
+	http.HandleFunc("/test", handle.TestResourceHandler)
+	// http.HandleFunc("/gamerange", handle.RangeGames)
+	http.HandleFunc("/add_palyes", handle.EditPlayers)
 	http.ListenAndServe(":8081", nil)
 }

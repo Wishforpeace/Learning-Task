@@ -1,8 +1,8 @@
 package model
 
 import (
-	"Mygo/football/utils"
 	"log"
+	"test/utils"
 )
 
 func AddDetails(game string, details string) error {

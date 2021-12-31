@@ -1,20 +1,19 @@
 package model
 
 import (
-	"Mygo/football/utils"
 	"crypto/rand"
 	"database/sql"
 	"encoding/base64"
 	"errors"
+	"test/utils"
 	"time"
 
-	_ "github.com/go-sql-driver/mysql"
 	"golang.org/x/crypto/bcrypt"
 )
 
-func generateToken(username string, password string) (map[string]interface{}, error) {
+func GenerateToken(username string, password string) (map[string]interface{}, error) {
 	sqlStr := "select user_id,user_password from users where user_name = ?"
-	stmt, err := utils.DB.Prepare(sqlStr, username)
+	stmt, err := utils.DB.Prepare(sqlStr)
 	if err != nil {
 		return nil, err
 	}
@@ -68,7 +67,7 @@ func generateToken(username string, password string) (map[string]interface{}, er
 	return tokenDetails, nil
 }
 
-func validateToken(authToken string) (map[string]interface{}, error) {
+func ValidateToken(authToken string) (map[string]interface{}, error) {
 	queryString := `select
 				system_users.user_id,
 				username,
@@ -90,7 +89,7 @@ func validateToken(authToken string) (map[string]interface{}, error) {
 	generatedAt := ""
 	expiresAt := ""
 
-	err = stmt.QueryRow(authToken).Scan(&userId, &username, &generateAt, &expiresAt)
+	err = stmt.QueryRow(authToken).Scan(&userId, &username, &generatedAt, &expiresAt)
 
 	if err != nil {
 		if err == sql.ErrNoRows {

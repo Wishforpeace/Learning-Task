@@ -56,6 +56,12 @@ func showPicHandle(w http.ResponseWriter, req *http.Request) {
 	w.Write(buff)
 }
 
+func errorHandle(err error, w http.ResponseWriter) {
+	if err != nil {
+		w.Write([]byte(err.Error()))
+	}
+}
+
 const html = `<html>
     <head></head>
     <body>
@@ -65,9 +71,3 @@ const html = `<html>
         </form>
     </body>
 </html>`
-
-func errorHandle(err error, w http.ResponseWriter) {
-	if err != nil {
-		w.Write([]byte(err.Error()))
-	}
-}
