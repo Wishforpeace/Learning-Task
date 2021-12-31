@@ -22,7 +22,7 @@
 
 根据需求阶段收集的信息，设计的实体联系图（不完整）如图 2-1 所示。
 
-
+![](https://github.com/Wishforpeace/Learning-Task/blob/main/picture/%E5%9B%BE%E7%89%871.png)
 
  
 
@@ -37,6 +37,8 @@
 + 项⽬（项⽬编号，创业公司代码， （b） ，孵化公司员⼯⼯号)
 
 #### 【问题1】（5分） 根据问题描述，补充图2-1的实体联系图。
+
+![](https://github.com/Wishforpeace/Learning-Task/blob/main/picture/image-20211209172825598.png)
 
 
 #### **【问题** **2】（4分） 补充逻辑结构设计结果中的** (a)、(b) **两处空缺及完整性约束关系。**
@@ -60,7 +62,7 @@
 
 （2） 如果增加新的实体，请给出新实体的关系模式，并对图  2-1  进⾏补充。如果不需要增加新的实体，请将“投资额”和“投资时间”两个属性补充连线到图 2-1 合适的对 象上，并对变化的关系模式进⾏修改。
 
-
+![](https://github.com/Wishforpeace/Learning-Task/blob/main/picture/image-20211209174239043.png)
 
 ## 题⽬⼆
 
@@ -82,9 +84,7 @@
 
 根据需求阶段收集的信息，设计的实体联系图和关系模式（不完整）如图 2-1 所示：
 
- 
-
-
+ ![](https://github.com/Wishforpeace/Learning-Task/blob/main/picture/%E5%9B%BE%E7%89%872.png)
 
 ### 【逻辑结构设计】
 
@@ -97,6 +97,8 @@
 + 员⼯（员⼯号，姓名（ c ），电话，基本⼯资)
 
 **【问题1】**（4分） 根据问题描述，补充4个联系，完善图2-1的实体联系图。联系名可⽤联系1、联系2、联系3和联系4代替，联系的类型为1 : 1、1 : n 和m : n（或1 : 1、1 : 和:*）。
+
+![](https://github.com/Wishforpeace/Learning-Task/blob/main/picture/image-20211209191621062.png)
 
 
 **【问题 2】**（5分） 根据题意，将关系模式中的空（a）~（c）补充完整。
