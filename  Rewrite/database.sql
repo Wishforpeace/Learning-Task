@@ -7,14 +7,6 @@ DROP TABLE IF EXISTS games;
 DROP TABLE IF EXISTS players;
 DROP TABLE IF EXISTS teams;
 
-CREATE TABLE users(
-    `user_id` BIGINT NOT NULL AUTO_INCREMENT,
-    `user_name` VARCHAR(100)  NULL,
-    `user_password` VARCHAR(100)  NULL,
-    `identity` INT(10)  NULL,
-    PRIMARY KEY(`user_id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
-
 
 CREATE TABLE games (
     `game_id` BIGINT NOT NULL AUTO_INCREMENT,
@@ -49,12 +41,4 @@ CREATE TABLE reservation(
     `user_name` VARCHAR(100) NOT NULL,
     `game` VARCHAR(100) NOT NUll
 )ENGINE=InnoDB DEFAULT CHARSET=utf8;
-
-CREATE TABLE authentication_tokens (
-           token_id BIGINT NOT NULL AUTO_INCREMENT PRIMARY KEY,
-           user_id BIGINT,
-           auth_token VARCHAR(255),
-           generated_at DATETIME,
-           expires_at   DATETIME
-) ENGINE = InnoDB;
 

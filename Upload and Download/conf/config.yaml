@@ -1,0 +1,10 @@
+local_name: demo
+runmode: debug
+addr: 0.0.0.0:8080
+url: http://0.0.0.0:8080
+max_ping_count: 10
+qiniu:
+  AccessKey: 0uFvcDBxpv3dNcJr1s-efIm2fAPlFyGuprL-NUcA
+  SerectKey: O4KTEMVLJzuuVkZ-b10_TRTtUqnZCZNs2Zs3hwhn
+  Bucket: demo-wyx
+  QiniuServer: rf41dfp0h.hd-bkt.clouddn.com

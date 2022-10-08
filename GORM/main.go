@@ -1,87 +1,100 @@
 package main
 
 import (
-	"errors"
 	"fmt"
-	"os/user"
-	"time"
-
-	"Error"
-
-	"gorm.io/driver/mysql"
-	"gorm.io/gorm"
+	"github.com/jinzhu/gorm"
+	_ "github.com/jinzhu/gorm/dialects/mysql"
+	"log"
+	"strconv"
 )
 
-var(
-	DB *gorm.DB
-)
-func main() {
-
-	dsn := "root:root&1234@tcp(127.0.0.1:3306)/dbname?charset=utf8mb4&parseTime=True&loc=Local"
-	DB, err = gorm.Open(mysql.Open(dsn), &gorm.Config{})
-	if err != nil {
-		panic(err)
-	} else {
-		fmt.Print("Connected")
-	}
-	type User struct {
-		ID       int
-		Name     string
-		Age      uint8
-		Birthday time.Time
-	}
-	user := User{Name: "Jinzhu", Age: 18, Birthday: time.Now()}
-	result := db.Create(&user)
-	user.ID
-	result.Error
-	result.RowsAffected
-	//用指定字段创建记录
-	DB.Select("Name", "Age", "CreateAt").Create(&user)
-	//INSERT INTO `users` (`name`,`age`,`created_at`) VALUES ("jinzhu", 18, "2020-07-04 11:05:21.775")
-	//创建一个记录且一同忽略传递给略去的字段值
-	DB.Omit("Name", "Age", "CreatedAt").Create(&user)
-	//批量插入
-	var users = []User{{Name: "jinzhu1"}, {Name: "jinzhu2"}, {Name: "jinzhu3"}}
-	DB.Create(&users)
-	for _, user := range users {
-		user.ID
-	}
-	//使用CreateInBatches分批创建时，你可以指定没批的数量，例如：
-	var users =[]User{{Name:"jinzhu"},{Name:"jinzhu_1000"}}
-	DB.CreateInBaches(users,100)
-	DB.err = gorm.Open(sqlite.Open("gorm.db"),&gorm.Config{
-		CreateBatchSize:1000,
-	})
-	DB = DB.Session(&gorm.Session{CreateBatchSize:1000})
-
-	users = [5000]User{{Name:"jinzhu",Pets:[]Pet{pet1,pet2,pet3}}
-	DB.Create(&users)
-
-
-
-
+type User struct {
+	gorm.Model
+	Email      string    `json:"email" gorm:"varchar(100);not null;unique"`
+	NickName   string    `json:"nick_name"gorm:"varchar(20);not null;unique"`
+	Password   string    `json:"password" gorm:"required;not nnull"`
+	Gender     string    `json:"gender" `
+	Degree     string    `json:"degree"  gorm:"varchar(10);not null"`
+	Publisheds []Task    `gorm:"foreignKey:Pubilsher;reference:Email"`
+	Accpeteds  []Task    `gorm:"foreignKey:Accepter;reference:Email"`
+	Payment    Payment   `gorm:"foreignKey:Email;reference:Email"`
+	Image      UserImage `gorm:"foreignKey:owner;reference:email"`
+	Earning    string    `gorm:"varchar(10)"`
+}
+type Task struct {
+	gorm.Model
+	Content   string     `json:"content" gorm:"varchar(255)"`
+	Publisher string     `json:"publisher" gorm:"unique;<-:create"`
+	Accepter  string     `json:"accepter"gorm:"unique;<-:create"`
+	Award     string     `json:"award"`
+	Status    string     `json:"status" gorm:"column:status;varchar(10)"`
+	Image     TaskImages `gorm:"foreignKey:TaskID;reference:ID"`
+}
+type UserImage struct {
+	gorm.Model
+	Owner  string `gorm:"<-:create;type:varchar(30)"`
+	Avatar string
+	Sha    string
+	Path   string
+}
+type TaskImages struct {
+	gorm.Model
+	TaskID uint
+	Avatar string
+	Sha    string
+	Path   string
+}
+type Payment struct {
+	gorm.Model
+	Email  string `gorm:"<-:create;type:varchar(100)"`
+	Avatar string
+	Sha    string
+	Path   string
 }
 
-	//创建hook
-	func (u *User) BeforeCreate(tx *gorm.DB) (err error) {
-		u.UUID = uuid.New()
-	  
-		if !u.IsValid() {
-		  err = errors.New("can't save invalid data")
-		}
-		return
-	  }
-	  
-	  func (u *User) AfterCreate(tx *gorm.DB) (err error) {
-		if u.ID == 1 {
-		  tx.Model(u).Update("role", "admin")
-		}
-		return
-	  }
+func main() {
+	dsn := "root:root&1234@tcp(127.0.0.1:3306)/Zhigui?charset=utf8mb4&parseTime=True&loc=Local"
+	DB, err := gorm.Open("mysql", dsn)
+	if err != nil {
+		panic(err)
+	}
+	// DB.AutoMigrate(&Zone{}, &Prefecture{})
+	// var zone Zone
 
-	  func (u *User) AfterCreate(tx *gorm.DB) (err error) {
-		if !u.IsValid() {
-		  return errors.New("rollback invalid user")
-		}
-		return nil
-	  }
+	// // pre1 := Prefecture{
+	// // 	Name: "篮球",
+	// // }
+	// // pre2 := Prefecture{
+	// // 	Name: "足球",
+	// // }
+	// zone = Zone{
+	// 	Name: "体育",
+	//  }
+	// // DB.Create(&zone)
+	// // DB.Debug().Model(&Zone{}).Save(&zone)
+	// var pre []Prefecture
+
+	//user.Email = "1903180340@qq.com"
+	//var Image UserImage
+	//DB.Debug().Preload("UserImage", "owner=?", user.Email).First(&Image)
+	//fmt.Printf("Image:%v", Image)
+	// DB.Debug().Preload("Prefectures").First(&z)
+	// fmt.Println(z.Name)
+
+	offset := 0
+	limit := 5
+	prefecture := 1
+	item := make([]*Task, 0)
+	d := DB.Table("tasks").
+		Where(" prefecture_id = ?", prefecture).
+		Offset(offset).Limit(limit).
+		Order("created_at").Find(&item)
+	if d.Error != nil {
+		log.Println(d.Error)
+	}
+	fmt.Println(item)
+	id := "22222"
+	Id, _ := strconv.ParseUint(id, 10, 32)
+	ID := uint(Id)
+	fmt.Printf("%T", ID)
+}
