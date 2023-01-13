@@ -7,21 +7,21 @@ import (
 
 // Mutex 嵌入字段使用
 type Counter1 struct {
-	mu    sync.Mutex
-	count int
+	sync.Mutex
+	count uint64
 }
 
 func main() {
-	var counter = Counter1{}
+	var counter Counter1
 	var wg sync.WaitGroup
 	wg.Add(10)
 	for i := 0; i < 10; i++ {
 		go func() {
 			defer wg.Done()
 			for j := 0; j < 1000; j++ {
-				counter.mu.Lock()
+				counter.Lock()
 				counter.count++
-				counter.mu.Unlock()
+				counter.Unlock()
 			}
 
 		}()

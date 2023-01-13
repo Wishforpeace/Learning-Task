@@ -8,8 +8,8 @@ import (
 
 func main() {
 	client := &http.Client{}
-	url := "http://localhost:8080/database/info"
-	req, err := http.NewRequest("GET", url, nil)
+	url := "http://119.3.2.168:8080/database/info"
+	req, err := http.NewRequest("POST", url, nil)
 	if err != nil {
 		fmt.Println(err)
 		return

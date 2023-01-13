@@ -40,14 +40,15 @@ func openDB() (*gorm.DB, error) {
 	}
 	return db, err
 }
+
 func main() {
 	db, err := openDB()
 	fmt.Println(err)
-	db.AutoMigrate(&Participator{})
+	//db.AutoMigrate(&Participator{})
 	if err = db.Model(&Participator{}).Create(&Participator{
-		Name:         "test",
+		Name:         "yyj",
 		Age:          1,
-		PersonalID:   "2021216666",
+		PersonalID:   "25041",
 		Gender:       "男",
 		Organization: "后端组",
 	}).Error; err != nil {

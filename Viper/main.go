@@ -1,37 +1,74 @@
 package main
 
 import (
-	"demo/bootstrap"
-	btsConfig "demo/config"
-	"demo/pkg/config"
-	"flag"
-	"log"
+	"errors"
+	"fmt"
+	"github.com/gin-gonic/gin"
+	"github.com/spf13/pflag"
+	"github.com/spf13/viper"
+	"go.uber.org/zap"
+	"net/http"
+	"test/config"
+	"test/log"
+	"test/model"
+	"test/router"
+	"test/router/middleware"
+	"time"
 )
 
-func init() {
-	// 加载 config 目录下的配置信息
-	btsConfig.Initialize()
-}
+var (
+	cfg = pflag.StringP("config", "c", "", "apifserver config file path")
+)
 
 func main() {
+	pflag.Parse()
 
-	// 配置初始化，依赖命令行 --env 参数
-	var env string
-	flag.StringVar(&env, "env", "", "加载 .env 文件，如 --env=testing 加载的是 .env.testing 文件")
-	flag.Parse()
-	log.Println("env", env)
-	config.InitConfig(env)
-	bootstrap.SetupDB()
-	//// new 一个 Gin Engine 实例
-	//router := gin.New()
-	//
-	//// 初始化路由绑定
-	//bootstrap.SetupRoute(router)
-	//
-	//// 运行服务
-	//err := router.Run(":" + config.Get("app.port"))
-	//if err != nil {
-	//	// 错误处理，端口被占用了或者其他错误
-	//	fmt.Println(err.Error())
-	//}
+	// init config
+	if err := config.Init(*cfg, "****"); err != nil {
+		panic(err)
+	}
+
+	// logger sync
+	defer log.SyncLogger()
+
+	// model.InitSelfDB()
+	model.DB.Init()
+	defer model.DB.Close()
+
+	gin.SetMode(viper.GetString("runmode"))
+
+	// 新建Gin 的Engine
+	g := gin.New()
+
+	//Routes
+	router.Load(
+		g,
+		middleware.Logging(),
+		middleware.RequestId(),
+	)
+	// Ping the server to make sure the router is working.
+	go func() {
+		if err := pingServer(); err != nil {
+			log.Fatal("The router has no response, or it might took too long to start up.", zap.String("reason", err.Error()))
+		}
+		log.Info(fmt.Sprintf("The router has been deployed on %s successfully.", viper.GetString("addr")))
+	}()
+
+	log.Info(http.ListenAndServe(viper.GetString("addr"), g).Error())
+}
+
+// pingServer pings the http server to make sure the router is working.
+func pingServer() error {
+	for i := 0; i < viper.GetInt("max_ping_count"); i++ {
+		// Ping the server by sending a GET request to `/health`.
+		resp, err := http.Get(viper.GetString("url") + "/sd/health")
+		if err == nil && resp.StatusCode == 200 {
+			return nil
+		}
+
+		// Sleep for a second to continue the next ping.
+		log.Info("Waiting for the router, retry in 1 second.")
+		time.Sleep(time.Second)
+	}
+	return errors.New("cannot connect to the router")
 }
