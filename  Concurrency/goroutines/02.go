@@ -24,9 +24,8 @@ func responseSize(url string) {
 }
 
 func main() {
-	go responseSize("http://www,duoke360.com")
+	go responseSize("http://www.duoke360.com")
 	go responseSize("http://baidu.com")
 	go responseSize("http://jd.com")
 	time.Sleep(10 * time.Second)
 }
-
