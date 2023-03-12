@@ -4,7 +4,7 @@ import "gorm.io/gorm"
 
 type Profile struct {
 	gorm.Model
-	Name      string
+	Name      string `gorm:"unique"`
 	Gender    string
 	Age       int
 	Height    int

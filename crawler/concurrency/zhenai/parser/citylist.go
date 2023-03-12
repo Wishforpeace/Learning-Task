@@ -16,17 +16,16 @@ func ParseCityList(bytes []byte) engine.ParseResult {
 	count := 0
 	for _, item := range submatch {
 		count++
-		if count > 300 {
-			if count > 300 {
-				break
-			}
-			//fmt.Println(string(item[1]))
-			result.Items = append(result.Items, "City:"+string(item[2]))
-			result.Requests = append(result.Requests, engine.Request{
-				Url:       string(item[1]),
-				ParseFunc: ParseProfile,
-			})
+		if count == 300 {
+			break
 		}
+		//fmt.Println(string(item[1]))
+		result.Items = append(result.Items, "City:"+string(item[2]))
+		result.Requests = append(result.Requests, engine.Request{
+			Url:       string(item[1]),
+			ParseFunc: ParseProfile,
+		})
+
 	}
 	return result
 }

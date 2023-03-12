@@ -8,14 +8,21 @@
       <jdbc-url>mongodb://10.43.190.54:27017/?authSource=admin</jdbc-url>
       <working-dir>$ProjectFileDir$</working-dir>
     </data-source>
-    <data-source source="LOCAL" name="ccnubox@47.99.191.1" uuid="e97399ec-0e37-45bd-90d1-39deada4bbd9">
+    <data-source source="LOCAL" name="@47.99.191.1" uuid="e97399ec-0e37-45bd-90d1-39deada4bbd9">
       <driver-ref>mongo</driver-ref>
       <synchronize>true</synchronize>
       <jdbc-driver>com.dbschema.MongoJdbcDriver</jdbc-driver>
-      <jdbc-url>mongodb://47.99.191.1:30400/ccnubox?authSource=admin</jdbc-url>
+      <jdbc-url>mongodb://47.99.191.1:30400/?authSource=admin</jdbc-url>
       <working-dir>$ProjectFileDir$</working-dir>
     </data-source>
     <data-source source="LOCAL" name="@localhost" uuid="fa627d1b-bc45-47e8-ac25-1a528da2744d">
+      <driver-ref>mongo</driver-ref>
+      <synchronize>true</synchronize>
+      <jdbc-driver>com.dbschema.MongoJdbcDriver</jdbc-driver>
+      <jdbc-url>mongodb://localhost:27017</jdbc-url>
+      <working-dir>$ProjectFileDir$</working-dir>
+    </data-source>
+    <data-source source="LOCAL" name="@localhost [2]" uuid="5a29c547-5398-4a52-a989-ee1ff9e4b9ef">
       <driver-ref>mongo</driver-ref>
       <synchronize>true</synchronize>
       <jdbc-driver>com.dbschema.MongoJdbcDriver</jdbc-driver>
